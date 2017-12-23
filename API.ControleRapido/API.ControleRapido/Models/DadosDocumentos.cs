@@ -1,13 +1,15 @@
-﻿namespace API.ControleRapido.Models
+﻿using System;
+
+namespace API.ControleRapido.Models
 {
     public class DadosDocumentos
     {
-        public string ID_DOCUMENTO { get; set; }
-        public string ID_PESSOA { get; set; }
-        public string ID_TIPO_DOCUMENTO { get; set; }
-        public string NUMERO { get; set; }
-        public string EMISSOR { get; set; }
-        public string DT_VALIDADE { get; set; }
-        public string DT_EMISSAO { get; set; }
+        public long id_documento { get; set; }
+        public long id_pessoa { get; set; }
+        public long id_tipo_documento { get; set; }
+        public int numero { get; set; }
+        public string emissor { get; set; }
+        public DateTime? dt_validade { get; set; }
+        public DateTime? dt_emissao { get; set; }
     }
 }

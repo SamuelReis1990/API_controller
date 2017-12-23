@@ -1,0 +1,536 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BDControllerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="acesso">
+          <Key>
+            <PropertyRef Name="id_acesso" />
+          </Key>
+          <Property Name="id_acesso" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_pessoa" Type="bigint" />
+          <Property Name="id_veiculo" Type="bigint" />
+          <Property Name="id_ponto_acesso" Type="bigint" Nullable="false" />
+          <Property Name="horario_ini" Type="time" Precision="7" />
+          <Property Name="horario_fim" Type="time" Precision="7" />
+          <Property Name="permitido" Type="bit" Nullable="false" />
+          <Property Name="rele" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="dedos">
+          <Key>
+            <PropertyRef Name="id_dedos" />
+          </Key>
+          <Property Name="id_dedos" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dedo" Type="int" Nullable="false" />
+          <Property Name="imgdedo" Type="image" Nullable="false" />
+          <Property Name="id_pessoa" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="documentos">
+          <Key>
+            <PropertyRef Name="id_documento" />
+          </Key>
+          <Property Name="id_documento" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_pessoa" Type="bigint" Nullable="false" />
+          <Property Name="id_tipo_documento" Type="bigint" Nullable="false" />
+          <Property Name="numero" Type="int" Nullable="false" />
+          <Property Name="emissor" Type="varchar" MaxLength="50" />
+          <Property Name="dt_validade" Type="date" />
+          <Property Name="dt_emissao" Type="date" />
+        </EntityType>
+        <EntityType Name="pessoas">
+          <Key>
+            <PropertyRef Name="id_pessoa" />
+          </Key>
+          <Property Name="id_pessoa" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_tipo_pessoa" Type="bigint" Nullable="false" />
+          <Property Name="nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="sexo" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="foto" Type="image" />
+          <Property Name="old_id" Type="bigint" />
+          <Property Name="dt_ini_val" Type="datetime" />
+          <Property Name="dt_fim_val" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tipo_documento">
+          <Key>
+            <PropertyRef Name="id_tipo_documento" />
+          </Key>
+          <Property Name="id_tipo_documento" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tipo_pessoa">
+          <Key>
+            <PropertyRef Name="id_tipo_pessoa" />
+          </Key>
+          <Property Name="id_tipo_pessoa" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descricao" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="veiculos">
+          <Key>
+            <PropertyRef Name="id_veiculo" />
+          </Key>
+          <Property Name="id_veiculo" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_pessoa" Type="bigint" />
+          <Property Name="id_tipo_veiculo" Type="bigint" Nullable="false" />
+          <Property Name="id_marca" Type="bigint" />
+          <Property Name="id_modelo" Type="bigint" />
+          <Property Name="cor" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="placa" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="foto" Type="image" />
+          <Property Name="old_id" Type="bigint" />
+          <Property Name="dt_ini_val" Type="datetime" />
+          <Property Name="dt_fim_val" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_acesso_pessoas">
+          <End Role="pessoas" Type="Self.pessoas" Multiplicity="0..1" />
+          <End Role="acesso" Type="Self.acesso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pessoas">
+              <PropertyRef Name="id_pessoa" />
+            </Principal>
+            <Dependent Role="acesso">
+              <PropertyRef Name="id_pessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_acesso_veiculos">
+          <End Role="veiculos" Type="Self.veiculos" Multiplicity="0..1" />
+          <End Role="acesso" Type="Self.acesso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="veiculos">
+              <PropertyRef Name="id_veiculo" />
+            </Principal>
+            <Dependent Role="acesso">
+              <PropertyRef Name="id_veiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dedos_pessoas">
+          <End Role="pessoas" Type="Self.pessoas" Multiplicity="1" />
+          <End Role="dedos" Type="Self.dedos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pessoas">
+              <PropertyRef Name="id_pessoa" />
+            </Principal>
+            <Dependent Role="dedos">
+              <PropertyRef Name="id_pessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_documentos_pessoas">
+          <End Role="pessoas" Type="Self.pessoas" Multiplicity="1" />
+          <End Role="documentos" Type="Self.documentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pessoas">
+              <PropertyRef Name="id_pessoa" />
+            </Principal>
+            <Dependent Role="documentos">
+              <PropertyRef Name="id_pessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_documentos_tipo_documento">
+          <End Role="tipo_documento" Type="Self.tipo_documento" Multiplicity="1" />
+          <End Role="documentos" Type="Self.documentos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_documento">
+              <PropertyRef Name="id_tipo_documento" />
+            </Principal>
+            <Dependent Role="documentos">
+              <PropertyRef Name="id_tipo_documento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pessoas_tipo_pessoa">
+          <End Role="tipo_pessoa" Type="Self.tipo_pessoa" Multiplicity="1" />
+          <End Role="pessoas" Type="Self.pessoas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_pessoa">
+              <PropertyRef Name="id_tipo_pessoa" />
+            </Principal>
+            <Dependent Role="pessoas">
+              <PropertyRef Name="id_tipo_pessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_veiculos_pessoas">
+          <End Role="pessoas" Type="Self.pessoas" Multiplicity="0..1" />
+          <End Role="veiculos" Type="Self.veiculos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pessoas">
+              <PropertyRef Name="id_pessoa" />
+            </Principal>
+            <Dependent Role="veiculos">
+              <PropertyRef Name="id_pessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDControllerModelStoreContainer">
+          <EntitySet Name="acesso" EntityType="Self.acesso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dedos" EntityType="Self.dedos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="documentos" EntityType="Self.documentos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pessoas" EntityType="Self.pessoas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipo_documento" EntityType="Self.tipo_documento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipo_pessoa" EntityType="Self.tipo_pessoa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="veiculos" EntityType="Self.veiculos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_acesso_pessoas" Association="Self.FK_acesso_pessoas">
+            <End Role="pessoas" EntitySet="pessoas" />
+            <End Role="acesso" EntitySet="acesso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_acesso_veiculos" Association="Self.FK_acesso_veiculos">
+            <End Role="veiculos" EntitySet="veiculos" />
+            <End Role="acesso" EntitySet="acesso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dedos_pessoas" Association="Self.FK_dedos_pessoas">
+            <End Role="pessoas" EntitySet="pessoas" />
+            <End Role="dedos" EntitySet="dedos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_documentos_pessoas" Association="Self.FK_documentos_pessoas">
+            <End Role="pessoas" EntitySet="pessoas" />
+            <End Role="documentos" EntitySet="documentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_documentos_tipo_documento" Association="Self.FK_documentos_tipo_documento">
+            <End Role="tipo_documento" EntitySet="tipo_documento" />
+            <End Role="documentos" EntitySet="documentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pessoas_tipo_pessoa" Association="Self.FK_pessoas_tipo_pessoa">
+            <End Role="tipo_pessoa" EntitySet="tipo_pessoa" />
+            <End Role="pessoas" EntitySet="pessoas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_veiculos_pessoas" Association="Self.FK_veiculos_pessoas">
+            <End Role="pessoas" EntitySet="pessoas" />
+            <End Role="veiculos" EntitySet="veiculos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BDControllerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="acesso">
+          <Key>
+            <PropertyRef Name="id_acesso" />
+          </Key>
+          <Property Name="id_acesso" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_pessoa" Type="Int64" />
+          <Property Name="id_veiculo" Type="Int64" />
+          <Property Name="id_ponto_acesso" Type="Int64" Nullable="false" />
+          <Property Name="horario_ini" Type="Time" Precision="7" />
+          <Property Name="horario_fim" Type="Time" Precision="7" />
+          <Property Name="permitido" Type="Boolean" Nullable="false" />
+          <Property Name="rele" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="pessoa" Relationship="Self.FK_acesso_pessoas" FromRole="acesso" ToRole="pessoas" />
+          <NavigationProperty Name="veiculo" Relationship="Self.FK_acesso_veiculos" FromRole="acesso" ToRole="veiculos" />
+        </EntityType>
+        <EntityType Name="dedo">
+          <Key>
+            <PropertyRef Name="id_dedos" />
+          </Key>
+          <Property Name="id_dedos" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dedo1" Type="Int32" Nullable="false" />
+          <Property Name="imgdedo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="id_pessoa" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="pessoa" Relationship="Self.FK_dedos_pessoas" FromRole="dedos" ToRole="pessoas" />
+        </EntityType>
+        <EntityType Name="documento">
+          <Key>
+            <PropertyRef Name="id_documento" />
+          </Key>
+          <Property Name="id_documento" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_pessoa" Type="Int64" Nullable="false" />
+          <Property Name="id_tipo_documento" Type="Int64" Nullable="false" />
+          <Property Name="numero" Type="Int32" Nullable="false" />
+          <Property Name="emissor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dt_validade" Type="DateTime" Precision="0" />
+          <Property Name="dt_emissao" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="pessoa" Relationship="Self.FK_documentos_pessoas" FromRole="documentos" ToRole="pessoas" />
+          <NavigationProperty Name="tipo_documento" Relationship="Self.FK_documentos_tipo_documento" FromRole="documentos" ToRole="tipo_documento" />
+        </EntityType>
+        <EntityType Name="pessoa">
+          <Key>
+            <PropertyRef Name="id_pessoa" />
+          </Key>
+          <Property Name="id_pessoa" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_tipo_pessoa" Type="Int64" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sexo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="foto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="old_id" Type="Int64" />
+          <Property Name="dt_ini_val" Type="DateTime" Precision="3" />
+          <Property Name="dt_fim_val" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="acessoes" Relationship="Self.FK_acesso_pessoas" FromRole="pessoas" ToRole="acesso" />
+          <NavigationProperty Name="dedos" Relationship="Self.FK_dedos_pessoas" FromRole="pessoas" ToRole="dedos" />
+          <NavigationProperty Name="documentos" Relationship="Self.FK_documentos_pessoas" FromRole="pessoas" ToRole="documentos" />
+          <NavigationProperty Name="tipo_pessoa" Relationship="Self.FK_pessoas_tipo_pessoa" FromRole="pessoas" ToRole="tipo_pessoa" />
+          <NavigationProperty Name="veiculos" Relationship="Self.FK_veiculos_pessoas" FromRole="pessoas" ToRole="veiculos" />
+        </EntityType>
+        <EntityType Name="tipo_documento">
+          <Key>
+            <PropertyRef Name="id_tipo_documento" />
+          </Key>
+          <Property Name="id_tipo_documento" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="documentos" Relationship="Self.FK_documentos_tipo_documento" FromRole="tipo_documento" ToRole="documentos" />
+        </EntityType>
+        <EntityType Name="tipo_pessoa">
+          <Key>
+            <PropertyRef Name="id_tipo_pessoa" />
+          </Key>
+          <Property Name="id_tipo_pessoa" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="pessoas" Relationship="Self.FK_pessoas_tipo_pessoa" FromRole="tipo_pessoa" ToRole="pessoas" />
+        </EntityType>
+        <EntityType Name="veiculo">
+          <Key>
+            <PropertyRef Name="id_veiculo" />
+          </Key>
+          <Property Name="id_veiculo" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_pessoa" Type="Int64" />
+          <Property Name="id_tipo_veiculo" Type="Int64" Nullable="false" />
+          <Property Name="id_marca" Type="Int64" />
+          <Property Name="id_modelo" Type="Int64" />
+          <Property Name="cor" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="placa" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="foto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="old_id" Type="Int64" />
+          <Property Name="dt_ini_val" Type="DateTime" Precision="3" />
+          <Property Name="dt_fim_val" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="acessoes" Relationship="Self.FK_acesso_veiculos" FromRole="veiculos" ToRole="acesso" />
+          <NavigationProperty Name="pessoa" Relationship="Self.FK_veiculos_pessoas" FromRole="veiculos" ToRole="pessoas" />
+        </EntityType>
+        <Association Name="FK_acesso_pessoas">
+          <End Role="pessoas" Type="Self.pessoa" Multiplicity="0..1" />
+          <End Role="acesso" Type="Self.acesso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pessoas">
+              <PropertyRef Name="id_pessoa" />
+            </Principal>
+            <Dependent Role="acesso">
+              <PropertyRef Name="id_pessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_acesso_veiculos">
+          <End Role="veiculos" Type="Self.veiculo" Multiplicity="0..1" />
+          <End Role="acesso" Type="Self.acesso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="veiculos">
+              <PropertyRef Name="id_veiculo" />
+            </Principal>
+            <Dependent Role="acesso">
+              <PropertyRef Name="id_veiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dedos_pessoas">
+          <End Role="pessoas" Type="Self.pessoa" Multiplicity="1" />
+          <End Role="dedos" Type="Self.dedo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pessoas">
+              <PropertyRef Name="id_pessoa" />
+            </Principal>
+            <Dependent Role="dedos">
+              <PropertyRef Name="id_pessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_documentos_pessoas">
+          <End Role="pessoas" Type="Self.pessoa" Multiplicity="1" />
+          <End Role="documentos" Type="Self.documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pessoas">
+              <PropertyRef Name="id_pessoa" />
+            </Principal>
+            <Dependent Role="documentos">
+              <PropertyRef Name="id_pessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_documentos_tipo_documento">
+          <End Role="tipo_documento" Type="Self.tipo_documento" Multiplicity="1" />
+          <End Role="documentos" Type="Self.documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_documento">
+              <PropertyRef Name="id_tipo_documento" />
+            </Principal>
+            <Dependent Role="documentos">
+              <PropertyRef Name="id_tipo_documento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pessoas_tipo_pessoa">
+          <End Role="tipo_pessoa" Type="Self.tipo_pessoa" Multiplicity="1" />
+          <End Role="pessoas" Type="Self.pessoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_pessoa">
+              <PropertyRef Name="id_tipo_pessoa" />
+            </Principal>
+            <Dependent Role="pessoas">
+              <PropertyRef Name="id_tipo_pessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_veiculos_pessoas">
+          <End Role="pessoas" Type="Self.pessoa" Multiplicity="0..1" />
+          <End Role="veiculos" Type="Self.veiculo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pessoas">
+              <PropertyRef Name="id_pessoa" />
+            </Principal>
+            <Dependent Role="veiculos">
+              <PropertyRef Name="id_pessoa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BD_Controller_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="acessoes" EntityType="Self.acesso" />
+          <EntitySet Name="dedos" EntityType="Self.dedo" />
+          <EntitySet Name="documentos" EntityType="Self.documento" />
+          <EntitySet Name="pessoas" EntityType="Self.pessoa" />
+          <EntitySet Name="tipo_documento" EntityType="Self.tipo_documento" />
+          <EntitySet Name="tipo_pessoa" EntityType="Self.tipo_pessoa" />
+          <EntitySet Name="veiculos" EntityType="Self.veiculo" />
+          <AssociationSet Name="FK_acesso_pessoas" Association="Self.FK_acesso_pessoas">
+            <End Role="pessoas" EntitySet="pessoas" />
+            <End Role="acesso" EntitySet="acessoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_acesso_veiculos" Association="Self.FK_acesso_veiculos">
+            <End Role="veiculos" EntitySet="veiculos" />
+            <End Role="acesso" EntitySet="acessoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dedos_pessoas" Association="Self.FK_dedos_pessoas">
+            <End Role="pessoas" EntitySet="pessoas" />
+            <End Role="dedos" EntitySet="dedos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_documentos_pessoas" Association="Self.FK_documentos_pessoas">
+            <End Role="pessoas" EntitySet="pessoas" />
+            <End Role="documentos" EntitySet="documentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_documentos_tipo_documento" Association="Self.FK_documentos_tipo_documento">
+            <End Role="tipo_documento" EntitySet="tipo_documento" />
+            <End Role="documentos" EntitySet="documentos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pessoas_tipo_pessoa" Association="Self.FK_pessoas_tipo_pessoa">
+            <End Role="tipo_pessoa" EntitySet="tipo_pessoa" />
+            <End Role="pessoas" EntitySet="pessoas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_veiculos_pessoas" Association="Self.FK_veiculos_pessoas">
+            <End Role="pessoas" EntitySet="pessoas" />
+            <End Role="veiculos" EntitySet="veiculos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BDControllerModelStoreContainer" CdmEntityContainer="BD_Controller_Entities">
+          <EntitySetMapping Name="acessoes">
+            <EntityTypeMapping TypeName="BDControllerModel.acesso">
+              <MappingFragment StoreEntitySet="acesso">
+                <ScalarProperty Name="id_acesso" ColumnName="id_acesso" />
+                <ScalarProperty Name="id_pessoa" ColumnName="id_pessoa" />
+                <ScalarProperty Name="id_veiculo" ColumnName="id_veiculo" />
+                <ScalarProperty Name="id_ponto_acesso" ColumnName="id_ponto_acesso" />
+                <ScalarProperty Name="horario_ini" ColumnName="horario_ini" />
+                <ScalarProperty Name="horario_fim" ColumnName="horario_fim" />
+                <ScalarProperty Name="permitido" ColumnName="permitido" />
+                <ScalarProperty Name="rele" ColumnName="rele" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dedos">
+            <EntityTypeMapping TypeName="BDControllerModel.dedo">
+              <MappingFragment StoreEntitySet="dedos">
+                <ScalarProperty Name="id_dedos" ColumnName="id_dedos" />
+                <ScalarProperty Name="dedo1" ColumnName="dedo" />
+                <ScalarProperty Name="imgdedo" ColumnName="imgdedo" />
+                <ScalarProperty Name="id_pessoa" ColumnName="id_pessoa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="documentos">
+            <EntityTypeMapping TypeName="BDControllerModel.documento">
+              <MappingFragment StoreEntitySet="documentos">
+                <ScalarProperty Name="id_documento" ColumnName="id_documento" />
+                <ScalarProperty Name="id_pessoa" ColumnName="id_pessoa" />
+                <ScalarProperty Name="id_tipo_documento" ColumnName="id_tipo_documento" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="emissor" ColumnName="emissor" />
+                <ScalarProperty Name="dt_validade" ColumnName="dt_validade" />
+                <ScalarProperty Name="dt_emissao" ColumnName="dt_emissao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pessoas">
+            <EntityTypeMapping TypeName="BDControllerModel.pessoa">
+              <MappingFragment StoreEntitySet="pessoas">
+                <ScalarProperty Name="id_pessoa" ColumnName="id_pessoa" />
+                <ScalarProperty Name="id_tipo_pessoa" ColumnName="id_tipo_pessoa" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="foto" ColumnName="foto" />
+                <ScalarProperty Name="old_id" ColumnName="old_id" />
+                <ScalarProperty Name="dt_ini_val" ColumnName="dt_ini_val" />
+                <ScalarProperty Name="dt_fim_val" ColumnName="dt_fim_val" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipo_documento">
+            <EntityTypeMapping TypeName="BDControllerModel.tipo_documento">
+              <MappingFragment StoreEntitySet="tipo_documento">
+                <ScalarProperty Name="id_tipo_documento" ColumnName="id_tipo_documento" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipo_pessoa">
+            <EntityTypeMapping TypeName="BDControllerModel.tipo_pessoa">
+              <MappingFragment StoreEntitySet="tipo_pessoa">
+                <ScalarProperty Name="id_tipo_pessoa" ColumnName="id_tipo_pessoa" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="veiculos">
+            <EntityTypeMapping TypeName="BDControllerModel.veiculo">
+              <MappingFragment StoreEntitySet="veiculos">
+                <ScalarProperty Name="id_veiculo" ColumnName="id_veiculo" />
+                <ScalarProperty Name="id_pessoa" ColumnName="id_pessoa" />
+                <ScalarProperty Name="id_tipo_veiculo" ColumnName="id_tipo_veiculo" />
+                <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+                <ScalarProperty Name="id_modelo" ColumnName="id_modelo" />
+                <ScalarProperty Name="cor" ColumnName="cor" />
+                <ScalarProperty Name="placa" ColumnName="placa" />
+                <ScalarProperty Name="foto" ColumnName="foto" />
+                <ScalarProperty Name="old_id" ColumnName="old_id" />
+                <ScalarProperty Name="dt_ini_val" ColumnName="dt_ini_val" />
+                <ScalarProperty Name="dt_fim_val" ColumnName="dt_fim_val" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

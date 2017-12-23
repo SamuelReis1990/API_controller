@@ -481,13 +481,23 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:API.ControleRapido.Controllers.VisitantesController">
+            <summary>
+            Classe responsável pelos cruds de visitantes
+            </summary>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.VisitantesController.#ctor">
+            <summary>
+            Construtor da classe responsável por instanciar o contexto do EF
+            </summary>
+        </member>
         <member name="M:API.ControleRapido.Controllers.VisitantesController.ListarPessoas">
             <summary>
             Método responsável por listar todos os dados da tabela Pessoas
             </summary>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.ListarPessoas(System.String)">
+        <member name="M:API.ControleRapido.Controllers.VisitantesController.ListarPessoas(System.Int64)">
             <summary>
             Método responsável por listar os dados de uma pessoas da tabela Pessoas
             </summary>
@@ -501,7 +511,7 @@
             <param name="dadosPessoas"></param>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.AtualizarPessoas(System.String,API.ControleRapido.Models.DadosPessoas)">
+        <member name="M:API.ControleRapido.Controllers.VisitantesController.AtualizarPessoas(System.Int64,API.ControleRapido.Models.DadosPessoas)">
             <summary>
             Método responsável por atualizar os dados na tabela Pessoas
             </summary>
@@ -509,7 +519,7 @@
             <param name="dadosPessoas"></param>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.RemoverPessoas(System.String)">
+        <member name="M:API.ControleRapido.Controllers.VisitantesController.RemoverPessoas(System.Int64)">
             <summary>
             Método responsável por remover os dados na tabela pessoas
             </summary>

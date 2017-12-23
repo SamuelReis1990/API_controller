@@ -1,14 +1,15 @@
-﻿namespace API.ControleRapido.Models
+﻿using System;
+
+namespace API.ControleRapido.Models
 {
     public class DadosPessoas
-    {
-        public string ID_PESSOA { get; set; }
-        public string ID_TIPO_PESSOA { get; set; }
-        public string NOME { get; set; }
-        public string SEXO { get; set; }
-        public string FOTO { get; set; }
-        public string OLD_ID { get; set; }
-        public string DT_INI_VAL { get; set; }
-        public string DT_FIM_VAL { get; set; }
+    {        
+        public long id_tipo_pessoa { get; set; }
+        public string nome { get; set; }
+        public string sexo { get; set; }
+        public byte[] foto { get; set; }
+        public long? old_id { get; set; }
+        public DateTime? dt_ini_val { get; set; }
+        public DateTime? dt_fim_val { get; set; }
     }
 }
