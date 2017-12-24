@@ -196,6 +196,8 @@
     </Compile>
     <Compile Include="Models\DadosDocumentos.cs" />
     <Compile Include="Models\DadosPessoas.cs" />
+    <Compile Include="Models\DadosTipoDocumento.cs" />
+    <Compile Include="Models\DadosTipoPessoa.cs" />
     <Compile Include="Models\GetDadosPessoas.cs" />
     <Compile Include="Models\Retorno.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

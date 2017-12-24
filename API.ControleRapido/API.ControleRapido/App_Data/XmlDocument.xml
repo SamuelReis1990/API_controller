@@ -526,6 +526,12 @@
             <param name="idPessoa"></param>
             <returns></returns>
         </member>
+        <member name="M:API.ControleRapido.Controllers.VisitantesController.ListarTipoPessoa">
+            <summary>
+            Método responsável por listar todos os dados da tabela Tipo_Pessoa
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:API.ControleRapido.Controllers.VisitantesController.ListarDocumentos">
             <summary>
             Método responsável por listar todos os dados da tabela Documentos
@@ -559,6 +565,12 @@
             Método responsável por remover os dados na tabela Documentos
             </summary>
             <param name="idDocumento"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.VisitantesController.ListarTipoDocumento">
+            <summary>
+            Método responsável por listar todos os dados da tabela Tipo_Documento
+            </summary>
             <returns></returns>
         </member>
     </members>

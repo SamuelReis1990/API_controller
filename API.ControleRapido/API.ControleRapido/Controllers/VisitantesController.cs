@@ -40,7 +40,7 @@ namespace API.ControleRapido.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("pessoas")]
-        public IList<GetDadosPessoas> ListarPessoas()
+        public object ListarPessoas()
         {
             try
             {
@@ -56,11 +56,18 @@ namespace API.ControleRapido.Controllers
                     foto = p.foto
                 }).ToList();
 
-                return getDadosPessoas;
+                return getDadosPessoas ?? new List<GetDadosPessoas>();
             }
             catch (Exception e)
             {
-                return null;
+                if (e.Message.Contains("inner exception for details"))
+                {
+                    return e.InnerException.InnerException.Message;
+                }
+                else
+                {
+                    return e.Message;
+                }
             }
         }
 
@@ -71,21 +78,36 @@ namespace API.ControleRapido.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{idPessoa}/pessoas")]
-        public GetDadosPessoas ListarPessoas(long idPessoa)
+        public object ListarPessoas(long idPessoa)
         {
-            var getDadosPessoas = contexto.pessoas.Select(p => new GetDadosPessoas()
+            try
             {
-                id_pessoa = p.id_pessoa,
-                id_tipo_pessoa = p.id_tipo_pessoa,
-                nome = p.nome,
-                dt_fim_val = p.dt_fim_val,
-                dt_ini_val = p.dt_ini_val,
-                old_id = p.old_id,
-                sexo = p.sexo,
-                foto = p.foto
-            }).Where(p => p.id_pessoa == idPessoa).SingleOrDefault();
+                var getDadosPessoas = contexto.pessoas.Select(p => new GetDadosPessoas()
+                {
+                    id_pessoa = p.id_pessoa,
+                    id_tipo_pessoa = p.id_tipo_pessoa,
+                    nome = p.nome,
+                    dt_fim_val = p.dt_fim_val,
+                    dt_ini_val = p.dt_ini_val,
+                    old_id = p.old_id,
+                    sexo = p.sexo,
+                    foto = p.foto
+                }).Where(p => p.id_pessoa == idPessoa).SingleOrDefault();                
 
-            return getDadosPessoas;
+                return getDadosPessoas ?? new GetDadosPessoas();
+            }
+
+            catch (Exception e)
+            {
+                if (e.Message.Contains("inner exception for details"))
+                {
+                    return e.InnerException.InnerException.Message;
+                }
+                else
+                {
+                    return e.Message;
+                }
+            }
         }
 
         /// <summary>
@@ -199,6 +221,41 @@ namespace API.ControleRapido.Controllers
 
         #endregion
 
+        #region GET TABELA TIPO_PESSOA
+
+        /// <summary>
+        /// Método responsável por listar todos os dados da tabela Tipo_Pessoa
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("tipoPessoa")]
+        public object ListarTipoPessoa()
+        {
+            try
+            {
+                var dadosTipoPessoa = contexto.tipo_pessoa.Select(t => new DadosTipoPessoa()
+                {
+                    descricao = t.descricao,
+                    id_tipo_pessoa = t.id_tipo_pessoa
+                }).ToList();                
+
+                return dadosTipoPessoa ?? new List<DadosTipoPessoa>();
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Contains("inner exception for details"))
+                {
+                    return e.InnerException.InnerException.Message;
+                }
+                else
+                {
+                    return e.Message;
+                }
+            }
+        }
+
+        #endregion
+
         #region CRUD TABELA DOCUMENTOS
 
         /// <summary>
@@ -263,6 +320,41 @@ namespace API.ControleRapido.Controllers
         public string RemoverDocumentos(string idDocumento)
         {
             return "Removido";
+        }
+
+        #endregion
+
+        #region GET TABELA TIPO_DOCUMENTO
+
+        /// <summary>
+        /// Método responsável por listar todos os dados da tabela Tipo_Documento
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("tipoDocumento")]
+        public object ListarTipoDocumento()
+        {
+            try
+            {
+                var dadosTipoDocumento = contexto.tipo_documento.Select(t => new DadosTipoDocumento()
+                {
+                    descricao = t.descricao,
+                    id_tipo_documento = t.id_tipo_documento
+                }).ToList();
+
+                return dadosTipoDocumento ?? new List<DadosTipoDocumento>();
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Contains("inner exception for details"))
+                {
+                    return e.InnerException.InnerException.Message;
+                }
+                else
+                {
+                    return e.Message;
+                }
+            }
         }
 
         #endregion
