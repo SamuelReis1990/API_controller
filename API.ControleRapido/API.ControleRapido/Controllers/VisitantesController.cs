@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace API.ControleRapido.Controllers
             catch (Exception e) { }
         }
 
-        #region CRUD TABELA PESSOAS
+        #region TABELA PESSOAS
 
         /// <summary>
         /// Método responsável por listar todos os dados da tabela Pessoas
@@ -74,11 +75,11 @@ namespace API.ControleRapido.Controllers
         /// <summary>
         /// Método responsável por listar os dados de uma pessoas da tabela Pessoas
         /// </summary>
-        /// <param name="idPessoa"></param>
+        /// <param name="nome"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{idPessoa}/pessoas")]
-        public object ListarPessoas(long idPessoa)
+        [Route("{nome}/pessoas")]
+        public object ListarPessoas(string nome)
         {
             try
             {
@@ -92,11 +93,50 @@ namespace API.ControleRapido.Controllers
                     old_id = p.old_id,
                     sexo = p.sexo,
                     foto = p.foto
-                }).Where(p => p.id_pessoa == idPessoa).SingleOrDefault();                
+                }).Where(p => p.nome == nome).ToList();
 
-                return getDadosPessoas ?? new GetDadosPessoas();
+                return getDadosPessoas ?? new List<GetDadosPessoas>();
             }
+            catch (Exception e)
+            {
+                if (e.Message.Contains("inner exception for details"))
+                {
+                    return e.InnerException.InnerException.Message;
+                }
+                else
+                {
+                    return e.Message;
+                }
+            }
+        }
 
+        /// <summary>
+        /// Método responsável pelo autoComplete dos nomes das pessoas
+        /// </summary>
+        /// <param name="nome"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{nome}/autoCompletePessoas")]
+        public object AutoCompleteNomePessoas(string nome)
+        {
+            try
+            {
+                var getAutoCompleteNomePessoas = contexto.pessoas.Select(p => new GetAutoCompleteNomePessoas()
+                {
+                    id = p.id_pessoa,
+                    label = p.nome
+                }).Where(p => p.label.Contains(nome)).ToList();
+
+                getAutoCompleteNomePessoas = getAutoCompleteNomePessoas
+               .GroupBy(i => i.label)
+               .Select(j => new GetAutoCompleteNomePessoas()
+               {
+                   label = j.First().label,
+                   id = j.First().id
+               }).ToList();
+
+                return getAutoCompleteNomePessoas ?? new List<GetAutoCompleteNomePessoas>();
+            }
             catch (Exception e)
             {
                 if (e.Message.Contains("inner exception for details"))
@@ -221,7 +261,7 @@ namespace API.ControleRapido.Controllers
 
         #endregion
 
-        #region GET TABELA TIPO_PESSOA
+        #region TABELA TIPO_PESSOA
 
         /// <summary>
         /// Método responsável por listar todos os dados da tabela Tipo_Pessoa
@@ -237,7 +277,7 @@ namespace API.ControleRapido.Controllers
                 {
                     descricao = t.descricao,
                     id_tipo_pessoa = t.id_tipo_pessoa
-                }).ToList();                
+                }).ToList();
 
                 return dadosTipoPessoa ?? new List<DadosTipoPessoa>();
             }
@@ -256,7 +296,7 @@ namespace API.ControleRapido.Controllers
 
         #endregion
 
-        #region CRUD TABELA DOCUMENTOS
+        #region TABELA DOCUMENTOS
 
         /// <summary>
         /// Método responsável por listar todos os dados da tabela Documentos
@@ -324,7 +364,7 @@ namespace API.ControleRapido.Controllers
 
         #endregion
 
-        #region GET TABELA TIPO_DOCUMENTO
+        #region TABELA TIPO_DOCUMENTO
 
         /// <summary>
         /// Método responsável por listar todos os dados da tabela Tipo_Documento
