@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -11,24 +10,23 @@ using Newtonsoft.Json;
 namespace API.ControleRapido.Controllers
 {
     /// <summary>
-    /// Classe responsável pelos cruds de visitantes
+    /// Classe responsável pelos cruds das pessoas
     /// </summary>
     [AllowAnonymous]
-    [RoutePrefix("api/visitantes")]
-    public class VisitantesController : ApiController
+    [RoutePrefix("api/pessoas")]
+    public class PessoasController : ApiController
     {
         private Contexto contexto;
-        private Retorno retorno;
+        private RetornoPessoas retorno;
         /// <summary>
         /// Construtor da classe responsável por instanciar o contexto do EF
         /// </summary>
-        public VisitantesController()
+        public PessoasController()
         {
             try
             {
                 contexto = new Contexto();
-                retorno = new Retorno();
-
+                retorno = new RetornoPessoas();
             }
             catch (Exception e) { }
         }
@@ -40,7 +38,7 @@ namespace API.ControleRapido.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("pessoas")]
+        [Route("listarPessoas")]
         public object ListarPessoas()
         {
             try
@@ -78,7 +76,7 @@ namespace API.ControleRapido.Controllers
         /// <param name="nome"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{nome}/pessoas")]
+        [Route("{nome}/listarPessoas")]
         public object ListarPessoas(string nome)
         {
             try
@@ -117,11 +115,11 @@ namespace API.ControleRapido.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{nome}/autoCompletePessoas")]
-        public object AutoCompleteNomePessoas(string nome)
+        public object AutoCompletePessoas(string nome)
         {
             try
             {
-                var getAutoCompleteNomePessoas = contexto.pessoas.Select(p => new GetAutoCompleteNomePessoas()
+                var getAutoCompleteNomePessoas = contexto.pessoas.Select(p => new GetAutoCompletePessoas()
                 {
                     id = p.id_pessoa,
                     label = p.nome
@@ -129,13 +127,13 @@ namespace API.ControleRapido.Controllers
 
                 getAutoCompleteNomePessoas = getAutoCompleteNomePessoas
                .GroupBy(i => i.label)
-               .Select(j => new GetAutoCompleteNomePessoas()
+               .Select(j => new GetAutoCompletePessoas()
                {
                    label = j.First().label,
                    id = j.First().id
                }).ToList();
 
-                return getAutoCompleteNomePessoas ?? new List<GetAutoCompleteNomePessoas>();
+                return getAutoCompleteNomePessoas ?? new List<GetAutoCompletePessoas>();
             }
             catch (Exception e)
             {
@@ -156,8 +154,8 @@ namespace API.ControleRapido.Controllers
         /// <param name="dadosPessoas"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("pessoas")]
-        public Retorno CadastrarPessoas([FromBody]DadosPessoas dadosPessoas)
+        [Route("cadastrarPessoas")]
+        public RetornoPessoas CadastrarPessoas([FromBody]DadosPessoas dadosPessoas)
         {
             try
             {
@@ -194,8 +192,8 @@ namespace API.ControleRapido.Controllers
         /// <param name="dadosPessoas"></param>
         /// <returns></returns>
         [HttpPut]
-        [Route("{idPessoa}/pessoas")]
-        public Retorno AtualizarPessoas(long idPessoa, [FromBody]DadosPessoas dadosPessoas)
+        [Route("{idPessoa}/atualizarPessoas")]
+        public RetornoPessoas AtualizarPessoas(long idPessoa, [FromBody]DadosPessoas dadosPessoas)
         {
             try
             {
@@ -233,7 +231,7 @@ namespace API.ControleRapido.Controllers
         /// <param name="idPessoa"></param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("{idPessoa}/pessoas")]
+        [Route("{idPessoa}/removerPessoas")]
         public string RemoverPessoas(long idPessoa)
         {
             try
@@ -268,7 +266,7 @@ namespace API.ControleRapido.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("tipoPessoa")]
+        [Route("listarTipoPessoa")]
         public object ListarTipoPessoa()
         {
             try
@@ -280,109 +278,6 @@ namespace API.ControleRapido.Controllers
                 }).ToList();
 
                 return dadosTipoPessoa ?? new List<DadosTipoPessoa>();
-            }
-            catch (Exception e)
-            {
-                if (e.Message.Contains("inner exception for details"))
-                {
-                    return e.InnerException.InnerException.Message;
-                }
-                else
-                {
-                    return e.Message;
-                }
-            }
-        }
-
-        #endregion
-
-        #region TABELA DOCUMENTOS
-
-        /// <summary>
-        /// Método responsável por listar todos os dados da tabela Documentos
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("documentos")]
-        public IList<DadosDocumentos> ListarDocumentos()
-        {
-            IList<DadosDocumentos> dadosDocumento = new List<DadosDocumentos>();
-
-            return dadosDocumento;
-        }
-
-        /// <summary>
-        /// Método responsável por listar os dados de um documento da tabela Documentos
-        /// </summary>
-        /// <param name="idDocumento"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("{idDocmento}/documentos")]
-        public DadosDocumentos ListarDocumentos(string idDocumento)
-        {
-            DadosDocumentos dadosDocumentos = new DadosDocumentos();
-
-            return dadosDocumentos;
-        }
-
-        /// <summary>
-        /// Método responsável por inserir os dados na tabela Documentos
-        /// </summary>
-        /// <param name="dadosDocumentos"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("documentos")]
-        public string CadastrarDocumentos([FromBody]DadosDocumentos dadosDocumentos)
-        {
-            return "Cadastrado";
-        }
-
-        /// <summary>
-        /// Método responsável por atualizar os dados na tabela Documentos
-        /// </summary>
-        /// <param name="idDocumento"></param>
-        /// <param name="dadosDocumentos"></param>
-        /// <returns></returns>
-        [HttpPut]
-        [Route("{idDocumento}/documentos")]
-        public string AtualizarDocumentos(string idDocumento, [FromBody]DadosDocumentos dadosDocumentos)
-        {
-            return "Atualizado";
-        }
-
-        /// <summary>
-        /// Método responsável por remover os dados na tabela Documentos
-        /// </summary>
-        /// <param name="idDocumento"></param>
-        /// <returns></returns>
-        [HttpDelete]
-        [Route("{idDocumento}/documentos")]
-        public string RemoverDocumentos(string idDocumento)
-        {
-            return "Removido";
-        }
-
-        #endregion
-
-        #region TABELA TIPO_DOCUMENTO
-
-        /// <summary>
-        /// Método responsável por listar todos os dados da tabela Tipo_Documento
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("tipoDocumento")]
-        public object ListarTipoDocumento()
-        {
-            try
-            {
-                var dadosTipoDocumento = contexto.tipo_documento.Select(t => new DadosTipoDocumento()
-                {
-                    descricao = t.descricao,
-                    id_tipo_documento = t.id_tipo_documento
-                }).ToList();
-
-                return dadosTipoDocumento ?? new List<DadosTipoDocumento>();
             }
             catch (Exception e)
             {

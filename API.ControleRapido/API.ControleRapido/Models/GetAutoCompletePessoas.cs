@@ -1,6 +1,6 @@
 ﻿namespace API.ControleRapido.Models
 {
-    public class GetAutoCompleteNomePessoas
+    public class GetAutoCompletePessoas
     {
         public long id { get; set; }
         public string label { get; set; }

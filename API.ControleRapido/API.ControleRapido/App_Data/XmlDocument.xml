@@ -506,7 +506,7 @@
         </member>
         <member name="M:API.ControleRapido.Controllers.VisitantesController.AutoCompleteNomePessoas(System.String)">
             <summary>
-            Método responsável por listar os dados de uma pessoas da tabela Pessoas
+            Método responsável pelo autoComplete dos nomes das pessoas
             </summary>
             <param name="nome"></param>
             <returns></returns>
