@@ -481,85 +481,37 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
-        <member name="T:API.ControleRapido.Controllers.VisitantesController">
+        <member name="T:API.ControleRapido.Controllers.DocumentosController">
             <summary>
-            Classe responsável pelos cruds de visitantes
+            Classe responsável pelos cruds dos documentos
             </summary>
         </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.#ctor">
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.#ctor">
             <summary>
             Construtor da classe responsável por instanciar o contexto do EF
             </summary>
         </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.ListarPessoas">
-            <summary>
-            Método responsável por listar todos os dados da tabela Pessoas
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.ListarPessoas(System.String)">
-            <summary>
-            Método responsável por listar os dados de uma pessoas da tabela Pessoas
-            </summary>
-            <param name="nome"></param>
-            <returns></returns>
-        </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.AutoCompleteNomePessoas(System.String)">
-            <summary>
-            Método responsável pelo autoComplete dos nomes das pessoas
-            </summary>
-            <param name="nome"></param>
-            <returns></returns>
-        </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.CadastrarPessoas(API.ControleRapido.Models.DadosPessoas)">
-            <summary>
-            Método responsável por inserir os dados na tabela Pessoas
-            </summary>
-            <param name="dadosPessoas"></param>
-            <returns></returns>
-        </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.AtualizarPessoas(System.Int64,API.ControleRapido.Models.DadosPessoas)">
-            <summary>
-            Método responsável por atualizar os dados na tabela Pessoas
-            </summary>
-            <param name="idPessoa"></param>
-            <param name="dadosPessoas"></param>
-            <returns></returns>
-        </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.RemoverPessoas(System.Int64)">
-            <summary>
-            Método responsável por remover os dados na tabela pessoas
-            </summary>
-            <param name="idPessoa"></param>
-            <returns></returns>
-        </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.ListarTipoPessoa">
-            <summary>
-            Método responsável por listar todos os dados da tabela Tipo_Pessoa
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.ListarDocumentos">
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.ListarDocumentos">
             <summary>
             Método responsável por listar todos os dados da tabela Documentos
             </summary>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.ListarDocumentos(System.String)">
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.ListarDocumentos(System.Int64)">
             <summary>
             Método responsável por listar os dados de um documento da tabela Documentos
             </summary>
             <param name="idDocumento"></param>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.CadastrarDocumentos(API.ControleRapido.Models.DadosDocumentos)">
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.CadastrarDocumentos(API.ControleRapido.Models.DadosDocumentos)">
             <summary>
             Método responsável por inserir os dados na tabela Documentos
             </summary>
             <param name="dadosDocumentos"></param>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.AtualizarDocumentos(System.String,API.ControleRapido.Models.DadosDocumentos)">
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.AtualizarDocumentos(System.Int64,API.ControleRapido.Models.DadosDocumentos)">
             <summary>
             Método responsável por atualizar os dados na tabela Documentos
             </summary>
@@ -567,16 +519,74 @@
             <param name="dadosDocumentos"></param>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.RemoverDocumentos(System.String)">
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.RemoverDocumentos(System.Int64)">
             <summary>
             Método responsável por remover os dados na tabela Documentos
             </summary>
             <param name="idDocumento"></param>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.VisitantesController.ListarTipoDocumento">
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.ListarTipoDocumento">
             <summary>
             Método responsável por listar todos os dados da tabela Tipo_Documento
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:API.ControleRapido.Controllers.PessoasController">
+            <summary>
+            Classe responsável pelos cruds das pessoas
+            </summary>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.PessoasController.#ctor">
+            <summary>
+            Construtor da classe responsável por instanciar o contexto do EF
+            </summary>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.PessoasController.ListarPessoas">
+            <summary>
+            Método responsável por listar todos os dados da tabela Pessoas
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.PessoasController.ListarPessoas(System.String)">
+            <summary>
+            Método responsável por listar os dados de uma pessoas da tabela Pessoas
+            </summary>
+            <param name="nome"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.PessoasController.AutoCompletePessoas(System.String)">
+            <summary>
+            Método responsável pelo autoComplete dos nomes das pessoas
+            </summary>
+            <param name="nome"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.PessoasController.CadastrarPessoas(API.ControleRapido.Models.DadosPessoas)">
+            <summary>
+            Método responsável por inserir os dados na tabela Pessoas
+            </summary>
+            <param name="dadosPessoas"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.PessoasController.AtualizarPessoas(System.Int64,API.ControleRapido.Models.PostDadosPessoas)">
+            <summary>
+            Método responsável por atualizar os dados na tabela Pessoas
+            </summary>
+            <param name="idPessoa"></param>
+            <param name="dadosPessoas"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.PessoasController.RemoverPessoas(System.Int64)">
+            <summary>
+            Método responsável por remover os dados na tabela pessoas
+            </summary>
+            <param name="idPessoa"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.PessoasController.ListarTipoPessoa">
+            <summary>
+            Método responsável por listar todos os dados da tabela Tipo_Pessoa
             </summary>
             <returns></returns>
         </member>

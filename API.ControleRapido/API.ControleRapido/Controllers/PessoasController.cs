@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.Http;
 using API.ControleRapido.Models;
@@ -191,12 +192,17 @@ namespace API.ControleRapido.Controllers
         /// <param name="idPessoa"></param>
         /// <param name="dadosPessoas"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPost]
         [Route("{idPessoa}/atualizarPessoas")]
-        public RetornoPessoas AtualizarPessoas(long idPessoa, [FromBody]DadosPessoas dadosPessoas)
+        public RetornoPessoas AtualizarPessoas(long idPessoa, [FromBody]PostDadosPessoas dadosPessoas)
         {
             try
             {
+                if (!String.IsNullOrEmpty(dadosPessoas.foto_string))
+                {
+                    dadosPessoas.foto = Convert.FromBase64String(dadosPessoas.foto_string);
+                }                
+
                 var retornoJson = JsonConvert.SerializeObject(dadosPessoas);
                 var retornoPessoas = JsonConvert.DeserializeObject<pessoa>(retornoJson);
 
@@ -210,11 +216,21 @@ namespace API.ControleRapido.Controllers
 
                 return retorno;
             }
-            catch (Exception e)
+            catch (DbEntityValidationException e)
             {
                 if (e.Message.Contains("inner exception for details"))
                 {
                     retorno.mensagemRetorno = e.InnerException.InnerException.Message;
+                }
+                else if (e.Message.Contains("EntityValidationErrors"))
+                {
+                    foreach (var lista in e.EntityValidationErrors)
+                    {
+                        foreach (var listaErro in lista.ValidationErrors)
+                        {
+                            retorno.mensagemRetorno += listaErro.ErrorMessage;
+                        }
+                    }
                 }
                 else
                 {

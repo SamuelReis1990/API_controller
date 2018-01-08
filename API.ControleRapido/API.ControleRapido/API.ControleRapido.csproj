@@ -201,6 +201,7 @@
     <Compile Include="Models\DadosTipoPessoa.cs" />
     <Compile Include="Models\GetAutoCompletePessoas.cs" />
     <Compile Include="Models\GetDadosPessoas.cs" />
+    <Compile Include="Models\PostDadosPessoas.cs" />
     <Compile Include="Models\RetornoDocumentos.cs" />
     <Compile Include="Models\RetornoGenerico.cs" />
     <Compile Include="Models\RetornoPessoas.cs" />
