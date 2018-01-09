@@ -246,7 +246,7 @@ namespace API.ControleRapido.Controllers
         /// </summary>
         /// <param name="idPessoa"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpPost]
         [Route("{idPessoa}/removerPessoas")]
         public string RemoverPessoas(long idPessoa)
         {
@@ -260,11 +260,25 @@ namespace API.ControleRapido.Controllers
 
                 return "Operação realizada com sucesso.";
             }
-            catch (Exception e)
+            catch (DbEntityValidationException e)
             {
+                var mensagemErro = string.Empty;
+
                 if (e.Message.Contains("inner exception for details"))
                 {
                     return e.InnerException.InnerException.Message;
+                }
+                else if (e.Message.Contains("EntityValidationErrors"))
+                {
+                    foreach (var lista in e.EntityValidationErrors)
+                    {
+                        foreach (var listaErro in lista.ValidationErrors)
+                        {
+                            mensagemErro += listaErro.ErrorMessage;
+                        }
+                    }
+
+                    return mensagemErro;
                 }
                 else
                 {
