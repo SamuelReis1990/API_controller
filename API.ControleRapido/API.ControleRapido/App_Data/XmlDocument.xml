@@ -542,15 +542,16 @@
             Construtor da classe responsável por instanciar o contexto do EF
             </summary>
         </member>
-        <member name="M:API.ControleRapido.Controllers.PessoasController.ListarPessoas">
+        <member name="M:API.ControleRapido.Controllers.PessoasController.ListarPessoa(System.Int64)">
             <summary>
-            Método responsável por listar todos os dados da tabela Pessoas
+            Método responsável por listar os dados de uma pessoa da tabela Pessoas
             </summary>
+            <param name="idPessoa"></param>
             <returns></returns>
         </member>
         <member name="M:API.ControleRapido.Controllers.PessoasController.ListarPessoas(System.String)">
             <summary>
-            Método responsável por listar os dados de uma pessoas da tabela Pessoas
+            Método responsável por listar os dados de uma pessoa da tabela Pessoas
             </summary>
             <param name="nome"></param>
             <returns></returns>
@@ -562,7 +563,7 @@
             <param name="nome"></param>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.PessoasController.CadastrarPessoas(API.ControleRapido.Models.DadosPessoas)">
+        <member name="M:API.ControleRapido.Controllers.PessoasController.CadastrarPessoas(API.ControleRapido.Models.PostDadosPessoas)">
             <summary>
             Método responsável por inserir os dados na tabela Pessoas
             </summary>

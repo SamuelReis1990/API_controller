@@ -36,12 +36,13 @@ namespace API.ControleRapido.Controllers
         #region TABELA PESSOAS
 
         /// <summary>
-        /// Método responsável por listar todos os dados da tabela Pessoas
+        /// Método responsável por listar os dados de uma pessoa da tabela Pessoas
         /// </summary>
+        /// <param name="idPessoa"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("listarPessoas")]
-        public object ListarPessoas()
+        [Route("{idPessoa}/listarPessoa")]
+        public object ListarPessoa(long idPessoa)
         {
             try
             {
@@ -54,15 +55,29 @@ namespace API.ControleRapido.Controllers
                     dt_ini_val = p.dt_ini_val,
                     sexo = p.sexo,
                     foto = p.foto
-                }).ToList();
+                }).Where(p => p.id_pessoa == idPessoa).ToList();
 
                 return getDadosPessoas ?? new List<GetDadosPessoas>();
             }
-            catch (Exception e)
+            catch (DbEntityValidationException e)
             {
+                var mensagemErro = string.Empty;
+
                 if (e.Message.Contains("inner exception for details"))
                 {
                     return e.InnerException.InnerException.Message;
+                }
+                else if (e.Message.Contains("EntityValidationErrors"))
+                {
+                    foreach (var lista in e.EntityValidationErrors)
+                    {
+                        foreach (var listaErro in lista.ValidationErrors)
+                        {
+                            mensagemErro += listaErro.ErrorMessage;
+                        }
+                    }
+
+                    return mensagemErro;
                 }
                 else
                 {
@@ -72,7 +87,7 @@ namespace API.ControleRapido.Controllers
         }
 
         /// <summary>
-        /// Método responsável por listar os dados de uma pessoas da tabela Pessoas
+        /// Método responsável por listar os dados de uma pessoa da tabela Pessoas
         /// </summary>
         /// <param name="nome"></param>
         /// <returns></returns>
@@ -95,11 +110,25 @@ namespace API.ControleRapido.Controllers
 
                 return getDadosPessoas ?? new List<GetDadosPessoas>();
             }
-            catch (Exception e)
+            catch (DbEntityValidationException e)
             {
+                var mensagemErro = string.Empty;
+
                 if (e.Message.Contains("inner exception for details"))
                 {
                     return e.InnerException.InnerException.Message;
+                }
+                else if (e.Message.Contains("EntityValidationErrors"))
+                {
+                    foreach (var lista in e.EntityValidationErrors)
+                    {
+                        foreach (var listaErro in lista.ValidationErrors)
+                        {
+                            mensagemErro += listaErro.ErrorMessage;
+                        }
+                    }
+
+                    return mensagemErro;
                 }
                 else
                 {
@@ -135,11 +164,25 @@ namespace API.ControleRapido.Controllers
 
                 return getAutoCompleteNomePessoas ?? new List<GetAutoCompletePessoas>();
             }
-            catch (Exception e)
+            catch (DbEntityValidationException e)
             {
+                var mensagemErro = string.Empty;
+
                 if (e.Message.Contains("inner exception for details"))
                 {
                     return e.InnerException.InnerException.Message;
+                }
+                else if (e.Message.Contains("EntityValidationErrors"))
+                {
+                    foreach (var lista in e.EntityValidationErrors)
+                    {
+                        foreach (var listaErro in lista.ValidationErrors)
+                        {
+                            mensagemErro += listaErro.ErrorMessage;
+                        }
+                    }
+
+                    return mensagemErro;
                 }
                 else
                 {
@@ -155,10 +198,25 @@ namespace API.ControleRapido.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("cadastrarPessoas")]
-        public RetornoPessoas CadastrarPessoas([FromBody]DadosPessoas dadosPessoas)
+        public RetornoPessoas CadastrarPessoas([FromBody]PostDadosPessoas dadosPessoas)
         {
             try
             {
+                if (!String.IsNullOrEmpty(dadosPessoas.foto_string))
+                {
+                    dadosPessoas.foto = Convert.FromBase64String(dadosPessoas.foto_string);
+                }
+
+                if (!String.IsNullOrEmpty(dadosPessoas.dt_ini_val_string))
+                {
+                    dadosPessoas.dt_ini_val = DateTime.ParseExact(dadosPessoas.dt_ini_val_string, "dd/MM/yyyy", CultureInfo.CurrentCulture);
+                }
+
+                if (!String.IsNullOrEmpty(dadosPessoas.dt_fim_val_string))
+                {
+                    dadosPessoas.dt_fim_val = DateTime.ParseExact(dadosPessoas.dt_fim_val_string, "dd/MM/yyyy", CultureInfo.CurrentCulture);
+                }
+
                 var retornoJson = JsonConvert.SerializeObject(dadosPessoas);
                 var retornoPessoas = JsonConvert.DeserializeObject<pessoa>(retornoJson);
 
@@ -170,11 +228,21 @@ namespace API.ControleRapido.Controllers
 
                 return retorno;
             }
-            catch (Exception e)
+            catch (DbEntityValidationException e)
             {
                 if (e.Message.Contains("inner exception for details"))
                 {
                     retorno.mensagemRetorno = e.InnerException.InnerException.Message;
+                }
+                else if (e.Message.Contains("EntityValidationErrors"))
+                {
+                    foreach (var lista in e.EntityValidationErrors)
+                    {
+                        foreach (var listaErro in lista.ValidationErrors)
+                        {
+                            retorno.mensagemRetorno += listaErro.ErrorMessage;
+                        }
+                    }
                 }
                 else
                 {
@@ -319,11 +387,25 @@ namespace API.ControleRapido.Controllers
 
                 return dadosTipoPessoa ?? new List<DadosTipoPessoa>();
             }
-            catch (Exception e)
+            catch (DbEntityValidationException e)
             {
+                var mensagemErro = string.Empty;
+
                 if (e.Message.Contains("inner exception for details"))
                 {
                     return e.InnerException.InnerException.Message;
+                }
+                else if (e.Message.Contains("EntityValidationErrors"))
+                {
+                    foreach (var lista in e.EntityValidationErrors)
+                    {
+                        foreach (var listaErro in lista.ValidationErrors)
+                        {
+                            mensagemErro += listaErro.ErrorMessage;
+                        }
+                    }
+
+                    return mensagemErro;
                 }
                 else
                 {
