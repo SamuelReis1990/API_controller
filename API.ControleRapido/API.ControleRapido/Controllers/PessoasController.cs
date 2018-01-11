@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Globalization;
 using System.Linq;
 using System.Web.Http;
 using API.ControleRapido.Models;
@@ -51,7 +52,6 @@ namespace API.ControleRapido.Controllers
                     nome = p.nome,
                     dt_fim_val = p.dt_fim_val,
                     dt_ini_val = p.dt_ini_val,
-                    old_id = p.old_id,
                     sexo = p.sexo,
                     foto = p.foto
                 }).ToList();
@@ -89,10 +89,9 @@ namespace API.ControleRapido.Controllers
                     nome = p.nome,
                     dt_fim_val = p.dt_fim_val,
                     dt_ini_val = p.dt_ini_val,
-                    old_id = p.old_id,
                     sexo = p.sexo,
                     foto = p.foto
-                }).Where(p => p.nome == nome).ToList();
+                }).Where(p => p.nome == nome).ToList();                
 
                 return getDadosPessoas ?? new List<GetDadosPessoas>();
             }
@@ -201,7 +200,17 @@ namespace API.ControleRapido.Controllers
                 if (!String.IsNullOrEmpty(dadosPessoas.foto_string))
                 {
                     dadosPessoas.foto = Convert.FromBase64String(dadosPessoas.foto_string);
-                }                
+                }
+
+                if (!String.IsNullOrEmpty(dadosPessoas.dt_ini_val_string))
+                {
+                    dadosPessoas.dt_ini_val = DateTime.ParseExact(dadosPessoas.dt_ini_val_string, "dd/MM/yyyy", CultureInfo.CurrentCulture);
+                }
+
+                if (!String.IsNullOrEmpty(dadosPessoas.dt_fim_val_string))
+                {
+                    dadosPessoas.dt_fim_val = DateTime.ParseExact(dadosPessoas.dt_fim_val_string, "dd/MM/yyyy", CultureInfo.CurrentCulture);
+                }
 
                 var retornoJson = JsonConvert.SerializeObject(dadosPessoas);
                 var retornoPessoas = JsonConvert.DeserializeObject<pessoa>(retornoJson);
@@ -212,6 +221,7 @@ namespace API.ControleRapido.Controllers
                 contexto.SaveChanges();
 
                 retorno.idPessoa = retornoPessoas.id_pessoa.ToString();
+                retorno.nome = retornoPessoas.nome;
                 retorno.mensagemRetorno = "Operação realizada com sucesso.";
 
                 return retorno;
