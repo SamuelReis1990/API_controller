@@ -497,11 +497,25 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.DocumentosController.ListarDocumentos(System.Int64)">
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.ListarDocumentos(System.Int32)">
             <summary>
-            Método responsável por listar os dados de um documento da tabela Documentos
+            Método responsável por listar os dados de documentos da tabela Documentos
             </summary>
-            <param name="idDocumento"></param>
+            <param name="numero"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.ListarDocumento(System.Int32)">
+            <summary>
+            Método responsável por listar os dados de documentos da tabela Documentos
+            </summary>
+            <param name="idPessoa"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.AutoCompleteDocumentos(System.String)">
+            <summary>
+            Método responsável pelo autoComplete dos números dos documentos
+            </summary>
+            <param name="numero"></param>
             <returns></returns>
         </member>
         <member name="M:API.ControleRapido.Controllers.DocumentosController.CadastrarDocumentos(API.ControleRapido.Models.DadosDocumentos)">

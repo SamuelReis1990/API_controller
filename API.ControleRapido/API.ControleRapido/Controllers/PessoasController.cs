@@ -148,7 +148,7 @@ namespace API.ControleRapido.Controllers
         {
             try
             {
-                var getAutoCompleteNomePessoas = contexto.pessoas.Select(p => new GetAutoCompletePessoas()
+                var getAutoCompleteNomePessoas = contexto.pessoas.Select(p => new GetAutoComplete()
                 {
                     id = p.id_pessoa,
                     label = p.nome
@@ -156,13 +156,13 @@ namespace API.ControleRapido.Controllers
 
                 getAutoCompleteNomePessoas = getAutoCompleteNomePessoas
                .GroupBy(i => i.label)
-               .Select(j => new GetAutoCompletePessoas()
+               .Select(j => new GetAutoComplete()
                {
                    label = j.First().label,
                    id = j.First().id
                }).ToList();
 
-                return getAutoCompleteNomePessoas ?? new List<GetAutoCompletePessoas>();
+                return getAutoCompleteNomePessoas ?? new List<GetAutoComplete>();
             }
             catch (DbEntityValidationException e)
             {
