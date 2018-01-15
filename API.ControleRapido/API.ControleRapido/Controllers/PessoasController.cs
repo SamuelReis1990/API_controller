@@ -374,8 +374,8 @@ namespace API.ControleRapido.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("listarTipoPessoa")]
-        public object ListarTipoPessoa()
+        [Route("listarTiposPessoas")]
+        public object ListarTiposPessoas()
         {
             try
             {
@@ -384,6 +384,51 @@ namespace API.ControleRapido.Controllers
                     descricao = t.descricao,
                     id_tipo_pessoa = t.id_tipo_pessoa
                 }).ToList();
+
+                return dadosTipoPessoa ?? new List<DadosTipoPessoa>();
+            }
+            catch (DbEntityValidationException e)
+            {
+                var mensagemErro = string.Empty;
+
+                if (e.Message.Contains("inner exception for details"))
+                {
+                    return e.InnerException.InnerException.Message;
+                }
+                else if (e.Message.Contains("EntityValidationErrors"))
+                {
+                    foreach (var lista in e.EntityValidationErrors)
+                    {
+                        foreach (var listaErro in lista.ValidationErrors)
+                        {
+                            mensagemErro += listaErro.ErrorMessage;
+                        }
+                    }
+
+                    return mensagemErro;
+                }
+                else
+                {
+                    return e.Message;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Método responsável por listar um tipo de pessoa da tabela Tipo_Pessoa
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{idTipoPessoa}/listarTipoPessoa")]
+        public object listarTipoPessoa(long idTipoPessoa)
+        {
+            try
+            {
+                var dadosTipoPessoa = contexto.tipo_pessoa.Select(t => new DadosTipoPessoa()
+                {
+                    descricao = t.descricao,
+                    id_tipo_pessoa = t.id_tipo_pessoa
+                }).Where(t => t.id_tipo_pessoa == idTipoPessoa).ToList();
 
                 return dadosTipoPessoa ?? new List<DadosTipoPessoa>();
             }

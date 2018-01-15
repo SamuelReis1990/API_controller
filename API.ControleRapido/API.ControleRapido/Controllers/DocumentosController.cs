@@ -344,8 +344,8 @@ namespace API.ControleRapido.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("listarTipoDocumento")]
-        public object ListarTipoDocumento()
+        [Route("listarTiposDocumentos")]
+        public object ListarTiposDocumentos()
         {
             try
             {
@@ -362,6 +362,51 @@ namespace API.ControleRapido.Controllers
                 if (e.Message.Contains("inner exception for details"))
                 {
                     return e.InnerException.InnerException.Message;
+                }
+                else
+                {
+                    return e.Message;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Método responsável por listar um tipo de documento da tabela Tipo_Documento
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{idTipoDocumento}/listarTipoDocumento")]
+        public object ListarTipoDocumento(long idTipoDocumento)
+        {
+            try
+            {
+                var dadosTipoDocumento = contexto.tipo_documento.Select(t => new DadosTipoDocumento()
+                {
+                    descricao = t.descricao,
+                    id_tipo_documento = t.id_tipo_documento
+                }).Where(t => t.id_tipo_documento == idTipoDocumento).ToList();
+
+                return dadosTipoDocumento ?? new List<DadosTipoDocumento>();
+            }
+            catch (DbEntityValidationException e)
+            {
+                var mensagemErro = string.Empty;
+
+                if (e.Message.Contains("inner exception for details"))
+                {
+                    return e.InnerException.InnerException.Message;
+                }
+                else if (e.Message.Contains("EntityValidationErrors"))
+                {
+                    foreach (var lista in e.EntityValidationErrors)
+                    {
+                        foreach (var listaErro in lista.ValidationErrors)
+                        {
+                            mensagemErro += listaErro.ErrorMessage;
+                        }
+                    }
+
+                    return mensagemErro;
                 }
                 else
                 {

@@ -540,9 +540,15 @@
             <param name="idDocumento"></param>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.DocumentosController.ListarTipoDocumento">
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.ListarTiposDocumentos">
             <summary>
             Método responsável por listar todos os dados da tabela Tipo_Documento
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.ListarTipoDocumento(System.Int64)">
+            <summary>
+            Método responsável por listar um tipo de documento da tabela Tipo_Documento
             </summary>
             <returns></returns>
         </member>
@@ -599,9 +605,15 @@
             <param name="idPessoa"></param>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.PessoasController.ListarTipoPessoa">
+        <member name="M:API.ControleRapido.Controllers.PessoasController.ListarTiposPessoas">
             <summary>
             Método responsável por listar todos os dados da tabela Tipo_Pessoa
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.PessoasController.listarTipoPessoa(System.Int64)">
+            <summary>
+            Método responsável por listar um tipo de pessoa da tabela Tipo_Pessoa
             </summary>
             <returns></returns>
         </member>
