@@ -12,14 +12,18 @@ namespace API.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class dedo
+    public partial class tipo_dedo
     {
-        public long id_dedos { get; set; }
-        public byte[] imgdedo { get; set; }
-        public long id_pessoa { get; set; }
-        public long id_tipo_dedo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tipo_dedo()
+        {
+            this.dedos = new HashSet<dedo>();
+        }
     
-        public virtual pessoa pessoa { get; set; }
-        public virtual tipo_dedo tipo_dedo { get; set; }
+        public long id_tipo_dedo { get; set; }
+        public string descricao { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<dedo> dedos { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace API.DAL
         public long id_documento { get; set; }
         public long id_pessoa { get; set; }
         public long id_tipo_documento { get; set; }
-        public int numero { get; set; }
+        public string numero { get; set; }
         public string emissor { get; set; }
         public Nullable<System.DateTime> dt_validade { get; set; }
         public Nullable<System.DateTime> dt_emissao { get; set; }

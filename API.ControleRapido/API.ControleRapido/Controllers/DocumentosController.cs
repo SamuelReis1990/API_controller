@@ -77,7 +77,7 @@ namespace API.ControleRapido.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("{numero}/listarDocumentos")]
-        public object ListarDocumentos(int numero)
+        public object ListarDocumentos(string numero)
         {
             try
             {

@@ -18,9 +18,9 @@ namespace API.DAL
         public pessoa()
         {
             this.acessoes = new HashSet<acesso>();
-            this.dedos = new HashSet<dedo>();
-            this.documentos = new HashSet<documento>();
             this.veiculos = new HashSet<veiculo>();
+            this.documentos = new HashSet<documento>();
+            this.dedos = new HashSet<dedo>();
         }
     
         public long id_pessoa { get; set; }
@@ -34,12 +34,12 @@ namespace API.DAL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<acesso> acessoes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<dedo> dedos { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<documento> documentos { get; set; }
         public virtual tipo_pessoa tipo_pessoa { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<veiculo> veiculos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<documento> documentos { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<dedo> dedos { get; set; }
     }
 }

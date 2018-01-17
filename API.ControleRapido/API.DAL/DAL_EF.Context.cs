@@ -26,11 +26,12 @@ namespace API.DAL
         }
     
         public virtual DbSet<acesso> acessoes { get; set; }
-        public virtual DbSet<dedo> dedos { get; set; }
-        public virtual DbSet<documento> documentos { get; set; }
         public virtual DbSet<pessoa> pessoas { get; set; }
         public virtual DbSet<tipo_documento> tipo_documento { get; set; }
         public virtual DbSet<tipo_pessoa> tipo_pessoa { get; set; }
         public virtual DbSet<veiculo> veiculos { get; set; }
+        public virtual DbSet<tipo_dedo> tipo_dedo { get; set; }
+        public virtual DbSet<documento> documentos { get; set; }
+        public virtual DbSet<dedo> dedos { get; set; }
     }
 }

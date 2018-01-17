@@ -481,6 +481,29 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:API.ControleRapido.Controllers.BiometriaController">
+            <summary>
+            Classe responsável pelos cruds das biometrias
+            </summary>    
+        </member>
+        <member name="M:API.ControleRapido.Controllers.BiometriaController.#ctor">
+            <summary>
+            Construtor da classe responsável por instanciar o contexto do EF
+            </summary>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.BiometriaController.ListarDedo">
+            <summary>
+            Método responsável por listar um dedos cadastrado na tabela Dedos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:API.ControleRapido.Controllers.BiometriaController.CadastrarDedos(System.String)">
+            <summary>
+            Método responsável por inserir os dados na tabela Dedos
+            </summary>
+            <param name="idPessoa"></param>
+            <returns></returns>
+        </member>
         <member name="T:API.ControleRapido.Controllers.DocumentosController">
             <summary>
             Classe responsável pelos cruds dos documentos
@@ -497,7 +520,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.DocumentosController.ListarDocumentos(System.Int32)">
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.ListarDocumentos(System.String)">
             <summary>
             Método responsável por listar os dados de documentos da tabela Documentos
             </summary>
