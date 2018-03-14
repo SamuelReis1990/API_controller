@@ -35,7 +35,7 @@ namespace API.ControleRapido.Controllers
             catch (Exception e) { }
         }
 
-        private bool InicializarDispositivo()
+        private bool InicializarDispositivoNitgen()
         {
             uint retorno = nBioAPI.OpenDevice(NBioAPI.Type.DEVICE_ID.AUTO);
             if (retorno == NBioAPI.Error.NONE)
@@ -48,7 +48,7 @@ namespace API.ControleRapido.Controllers
             }
         }
 
-        private bool FecharDispositivo()
+        private bool FecharDispositivoNitgen()
         {
             uint retorno = nBioAPI.CloseDevice(NBioAPI.Type.DEVICE_ID.AUTO);
             if (retorno == NBioAPI.Error.NONE)
@@ -66,14 +66,14 @@ namespace API.ControleRapido.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("listarDedo")]
-        public RetornoBiometria ListarDedo()
+        [Route("listarDedoNitgen")]
+        public RetornoBiometria ListarDedoNitgen()
         {
             try
             {
                 NBioAPI.Type.HFIR hFIR;
 
-                if (InicializarDispositivo())
+                if (InicializarDispositivoNitgen())
                 {
                     m_NSearch.InitEngine();
 
@@ -81,14 +81,14 @@ namespace API.ControleRapido.Controllers
 
                     if (retornoEnroll != NBioAPI.Error.NONE)
                     {
-                        if (!FecharDispositivo())
+                        if (!FecharDispositivoNitgen())
                         {
                             retorno.mensagemRetorno = "Dispositivo não foi encerrado.";
                             return retorno;
                         }
                     }
 
-                    if (!FecharDispositivo())
+                    if (!FecharDispositivoNitgen())
                     {
                         retorno.mensagemRetorno = "Dispositivo não foi encerrado.";
                         return retorno;
@@ -155,15 +155,15 @@ namespace API.ControleRapido.Controllers
         /// <param name="idPessoa"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("{idPessoa}/cadastrarDedos")]
-        public RetornoBiometria CadastrarDedos(string idPessoa)
+        [Route("{idPessoa}/cadastrarDedosNitgen")]
+        public RetornoBiometria CadastrarDedosNitgen(string idPessoa)
         {
             try
             {
                 NBioAPI.Type.HFIR hFIR;
                 NBioAPI.Type.FIR byteDedo;
                 uint nUserID = 0;
-                if (InicializarDispositivo())
+                if (InicializarDispositivoNitgen())
                 {
                     m_NSearch.InitEngine();
 
@@ -173,14 +173,14 @@ namespace API.ControleRapido.Controllers
 
                     if (retornoEnroll != NBioAPI.Error.NONE)
                     {
-                        if (!FecharDispositivo())
+                        if (!FecharDispositivoNitgen())
                         {
                             retorno.mensagemRetorno = "Dispositivo não foi encerrado.";
                             return retorno;
                         }
                     }
 
-                    if (!FecharDispositivo())
+                    if (!FecharDispositivoNitgen())
                     {
                         retorno.mensagemRetorno = "Dispositivo não foi encerrado.";
                         return retorno;

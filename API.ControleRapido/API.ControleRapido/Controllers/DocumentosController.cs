@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Globalization;
 using System.Linq;
 using System.Web.Http;
 using API.ControleRapido.Models;
@@ -269,12 +270,22 @@ namespace API.ControleRapido.Controllers
         /// <param name="idDocumento"></param>
         /// <param name="dadosDocumentos"></param>
         /// <returns></returns>
-        [HttpPut]
+        [HttpPost]
         [Route("{idDocumento}/atualizarDocumentos")]
-        public RetornoDocumentos AtualizarDocumentos(long idDocumento, [FromBody]DadosDocumentos dadosDocumentos)
+        public RetornoDocumentos AtualizarDocumentos(long idDocumento, [FromBody]PostDadosDocumentos dadosDocumentos)
         {
             try
             {
+                if (!String.IsNullOrEmpty(dadosDocumentos.dt_emissao_string))
+                {
+                    dadosDocumentos.dt_emissao = DateTime.ParseExact(dadosDocumentos.dt_emissao_string, "dd/MM/yyyy", CultureInfo.CurrentCulture);
+                }
+
+                if (!String.IsNullOrEmpty(dadosDocumentos.dt_validade_string))
+                {
+                    dadosDocumentos.dt_validade = DateTime.ParseExact(dadosDocumentos.dt_validade_string, "dd/MM/yyyy", CultureInfo.CurrentCulture);
+                }                
+
                 var retornoJson = JsonConvert.SerializeObject(dadosDocumentos);
                 var retornoDocumentos = JsonConvert.DeserializeObject<documento>(retornoJson);
 
@@ -283,7 +294,7 @@ namespace API.ControleRapido.Controllers
                 contexto.Entry(retornoDocumentos).State = EntityState.Modified;
                 contexto.SaveChanges();
 
-                retorno.idDocumento = retornoDocumentos.id_pessoa.ToString();
+                retorno.idDocumento = retornoDocumentos.id_documento.ToString();
                 retorno.mensagemRetorno = "Operação realizada com sucesso.";
 
                 return retorno;

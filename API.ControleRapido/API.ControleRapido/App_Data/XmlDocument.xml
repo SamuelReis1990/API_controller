@@ -491,13 +491,13 @@
             Construtor da classe responsável por instanciar o contexto do EF
             </summary>
         </member>
-        <member name="M:API.ControleRapido.Controllers.BiometriaController.ListarDedo">
+        <member name="M:API.ControleRapido.Controllers.BiometriaController.ListarDedoNitgen">
             <summary>
             Método responsável por listar um dedos cadastrado na tabela Dedos
             </summary>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.BiometriaController.CadastrarDedos(System.String)">
+        <member name="M:API.ControleRapido.Controllers.BiometriaController.CadastrarDedosNitgen(System.String)">
             <summary>
             Método responsável por inserir os dados na tabela Dedos
             </summary>
@@ -548,7 +548,7 @@
             <param name="dadosDocumentos"></param>
             <returns></returns>
         </member>
-        <member name="M:API.ControleRapido.Controllers.DocumentosController.AtualizarDocumentos(System.Int64,API.ControleRapido.Models.DadosDocumentos)">
+        <member name="M:API.ControleRapido.Controllers.DocumentosController.AtualizarDocumentos(System.Int64,API.ControleRapido.Models.PostDadosDocumentos)">
             <summary>
             Método responsável por atualizar os dados na tabela Documentos
             </summary>

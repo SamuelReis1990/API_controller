@@ -53,10 +53,12 @@
     <Reference Include="API.DAL">
       <HintPath>..\API.DAL\bin\Debug\API.DAL.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -92,7 +94,7 @@
     </Reference>
     <Reference Include="NITGEN.SDK.NBioBSP, Version=1.2.2.0, Culture=neutral, PublicKeyToken=96eee45103d523d1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\NITGEN eNBSP\SDK\dotNET\NITGEN.SDK.NBioBSP.dll</HintPath>
+      <HintPath>..\packages\Biometria\Nitgen\lib\net45\NITGEN.SDK.NBioBSP.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -207,6 +209,7 @@
     <Compile Include="Models\DadosTipoPessoa.cs" />
     <Compile Include="Models\GetAutoCompletePessoas.cs" />
     <Compile Include="Models\GetDadosPessoas.cs" />
+    <Compile Include="Models\PostDadosDocumentos.cs" />
     <Compile Include="Models\PostDadosPessoas.cs" />
     <Compile Include="Models\RetornoBiometria.cs" />
     <Compile Include="Models\RetornoDocumentos.cs" />
