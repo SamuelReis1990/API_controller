@@ -319,7 +319,7 @@ namespace API.ControleRapido.Controllers
         /// </summary>
         /// <param name="idDocumento"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpPost]
         [Route("{idDocumento}/removerDocumentos")]
         public string RemoverDocumentos(long idDocumento)
         {
